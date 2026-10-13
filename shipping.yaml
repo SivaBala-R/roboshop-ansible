@@ -38,11 +38,11 @@
   - name: install dependencies
     command:
       cmd: mvn clean package
-      dest: /app
+      chdir: /app
   - name: move java archive file to targer directory
     command:
       cmd: mv target/shipping-1.0.jar shipping.jar
-      dest: /app
+      chdir: /app
   - name: copy shipping service
     template:
       src: shipping.service.j2
