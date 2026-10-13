@@ -40,7 +40,7 @@
     template:
       src: nginx.conf.j2
       dest: /etc/nginx/nginx.conf
-  - name: start nginx server
+  - name: restart nginx server
     service:
       name: nginx
-      state: started
+      state: restarted
