@@ -53,7 +53,7 @@
   - name: install python dependencies
     pip:
       name: PyMySQL
-      executable: pip3
+      # executable: pip3
   - name: load mysql data
     community.mysql.mysql_db:
       state: import
