@@ -1,6 +1,8 @@
 - name: configure shipping service
   hosts: shipping
   become: yes
+  vars:
+    mysql_root_password: RoboShop@1
   tasks:
   - name: install maven
     package:
@@ -55,18 +57,23 @@
   #   pip:
   #     name: python3-PyMySQL
   #     executable: pip
-  - name: load mysql data
-    community.mysql.mysql_db:
-      state: import
-      name: all
-      login_user: root
-      login_password: RoboShop@1
-      login_host: "{{ MYSQL_HOST }}"
-      target: "{{ item }}"
-    loop:
-    - /app/db/schema.sql
-    - /app/db/app-user.sql 
-    - /app/db/master-data.sql
+  # - name: load mysql data
+  #   community.mysql.mysql_db:
+  #     state: import
+  #     name: all
+  #     login_user: root
+  #     login_password: RoboShop@1
+  #     login_host: "{{ MYSQL_HOST }}"
+  #     target: "{{ item }}"
+  #   loop:
+  #   - /app/db/schema.sql
+  #   - /app/db/app-user.sql 
+  #   - /app/db/master-data.sql
+
+  - name: Load schema
+    shell: mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
+
+
   - name: deamon reload
     systemd_service:
       name: shipping
