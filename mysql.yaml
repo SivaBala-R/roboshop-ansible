@@ -4,8 +4,11 @@
   tasks:
   - name: Install MySQL Server
     package:
-      name: mariadb105-server
+      name: {{ item }}
       state: present
+    loop:
+    - mariadb105-server
+    - python3-PyMySQL
 
   - name: Start MySQL Service
     service:
