@@ -1,58 +1,40 @@
-# - name: Install MySQL Server and Configure Root Password
-#   hosts: mysql
-#   become: true
-#   vars:
-#     mysql_root_password: "RoboShop@1"
-
-#   tasks:
-#     # 1. Install MySQL Server and Python dependencies via DNF
-#     - name: Install MySQL Server and Python3-PyMySQL
-#       ansible.builtin.dnf:
-#         name:
-#           - mysql-server          # Correct package name for RHEL/Rocky Linux
-#           - python3-pymysql       # Required for Ansible mysql modules
-#         state: present
-#         update_cache: true
-
-#     # 2. Ensure the MySQL service is running (Note: service name is 'mysqld')
-#     - name: Ensure MySQL service is started and enabled
-#       ansible.builtin.service:
-#         name: mysqld              # Red Hat uses 'mysqld' instead of 'mysql'
-#         state: started
-#         enabled: true
-
-#     # 3. Set the root password securely and idempotently
-#     - name: Update MySQL root password
-#       community.mysql.mysql_user:
-#         name: root
-#         host: localhost
-#         password: "{{ mysql_root_password }}"
-#         login_user: root
-#         login_password: "{{ mysql_root_password }}"
-#         check_implicit_admin: true
-#         state: present
-
-
-
-
-
-
-
-
-
-
 - name: congigure mysql server
   hosts: mysql
   become: yes
   tasks:
-  - name: install mysql server
+  - name: Install MySQL Server
     package:
-      name: mysql
+      name: mariadb105-server
       state: present
-  - name: enable and start mysql
+
+  - name: Start MySQL Service
     service:
-      name: mysql
+      name: mariadb
       state: started
       enabled: yes
-  - name: set root password
-    command: mysql_secure_installation --set-root-pass RoboShop@1
+  - name: Set root password
+    community.mysql.mysql_user:
+      name: root
+      host: localhost
+      password: RoboShop@1
+      login_unix_socket: /var/lib/mysql/mysql.sock
+      check_implicit_admin: true
+
+
+
+
+
+
+
+
+#   - name: install mysql server
+#     package:
+#       name: mysql
+#       state: present
+#   - name: enable and start mysql
+#     service:
+#       name: mysql
+#       state: started
+#       enabled: yes
+#   - name: set root password
+#     command: mysql_secure_installation --set-root-pass RoboShop@1
