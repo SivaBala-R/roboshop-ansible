@@ -30,6 +30,7 @@
     get_url:
       url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
       dest: /tmp/shipping.zip
+      remote_src: yes
   - name: unzip shipping code
     unarchive:
       src: /tmp/shipping.zip
