@@ -42,8 +42,7 @@
     pip: 
       requirements: requirements.txt
       executable: pip3.9
-    args:
-      chdir: /app
+      dest: /app
   - name: copy payment service
     template:
       src: payment.service.j2
