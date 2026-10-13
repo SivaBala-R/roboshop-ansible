@@ -9,6 +9,7 @@
     loop:
     - maven
     - python3-pip
+    - python3-PyMySQL
   - name: creating roboshop system user
     user:
       name: roboshop
@@ -50,10 +51,10 @@
     template:
       src: shipping.service.j2
       dest: /etc/systemd/system/shipping.service
-  - name: install python dependencies
-    pip:
-      name: PyMySQL
-      executable: pip
+  # - name: install python dependencies
+  #   pip:
+  #     name: python3-PyMySQL
+  #     executable: pip
   - name: load mysql data
     community.mysql.mysql_db:
       state: import
