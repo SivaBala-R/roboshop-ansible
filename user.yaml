@@ -1,0 +1,52 @@
+- name: configure user service
+  hosts: user
+  become: yes
+  tasks:
+  - name: install nodejs:20
+    package:
+      name: nodejs20
+      state: present
+  - name: create system user
+    user:
+      name: roboshop
+      system: yes
+      home: /app
+      shell: /usr/sbin/nologin
+      comment: "roboshop system user"
+  - name: remove app directory
+    file:
+      path: /app
+      state: absent
+  - name: remove user.zip in tmp directory
+    file:
+      path: /tmp/user.zip
+      state: absent 
+  - name: create app directory
+    file:
+      path: /app
+      state: directory
+  - name: download user
+    get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
+      dest: /tmp/user.zip
+  - name: unzip user zip file
+    unarchive:
+      src: /tmp/user.zip
+      dest: /app
+      remote_src: yes
+  - name: install dependencies
+    community.general.npm:
+      path: /app
+  - name: copy user service
+    template:
+      src: user.service.j2
+      dest: /etc/systemd/system/user.service
+  - name: daemon reload
+    systemd_service:
+      name: user
+      daemon_reload: true
+  - name: enable and start user
+    service:
+      name: user
+      state: restarted
+      enabled: yes
