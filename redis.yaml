@@ -13,7 +13,7 @@
      replace: 0.0.0.0
   - name: update protect mode to no
     lineinfile:
-      path: /etc/redis/redis.conf
+      path: /etc/redis6/redis6.conf
       regexp: '^protected-mode'
       replace: 'protected-mode no'
   - name: enable and restart redis
