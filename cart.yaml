@@ -16,15 +16,15 @@
       state: present 
   - name: remove app directory
     file:
-      src: /app
+      path: /app
       state: absent
   - name: remove cart zip
     file:
-      src: /tmp/cart.zip
+      path: /tmp/cart.zip
       state: absent
   - name: create app directory
     file:
-      src: /app
+      path: /app
       state: directory
   - name: download cart code
     get_url:
