@@ -6,6 +6,9 @@
     package:
       name: maven
       state: present
+    loop:
+    - maven
+    - pip3.9
   - name: creating roboshop system user
     user:
       name: roboshop
@@ -50,7 +53,7 @@
   - name: install python dependencies
     pip:
       name: PyMySQL
-      executable: pip3.9
+      executable: pip3
 
   - name: load mysql data
     community.mysql.mysql_db:
