@@ -35,13 +35,13 @@
       src: /tmp/shipping.zip
       dest: /app
   - name: install dependencies
-    cammand: "mvn clean package"
-    args:
-      chdir: /app
+    command:
+      cmd: mvn clean package
+      dest: /app
   - name: move java archive file to targer directory
-    command: mv target/shipping-1.0.jar shipping.jar 
-    args:
-      chdir: /app
+    command:
+      cmd: mv target/shipping-1.0.jar shipping.jar
+      dest: /app
   - name: copy shipping service
     template:
       src: shipping.service.j2
