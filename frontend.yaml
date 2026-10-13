@@ -28,7 +28,7 @@
       url: "https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip"
       dest: /tmp/frontend.zip
   - name: unzip frontend.zip
-    unarchieve:
+    unarchive:
       src: /tmp/frontend.zip
       dest: /usr/share/nginx/html
       remote_Src: yes
