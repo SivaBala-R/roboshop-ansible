@@ -7,9 +7,8 @@
       name: {{ item }}
       state: present
     loop:
-     - mariadb105-server
-     - python3-PyMySQL
-
+    - mariadb105-server
+    - python3-PyMySQL
   - name: Start MySQL Service
     service:
       name: mariadb
