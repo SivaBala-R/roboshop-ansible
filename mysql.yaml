@@ -14,12 +14,16 @@
       state: started
       enabled: yes
   - name: Set root password
-    community.mysql.mysql_user:
-      name: root
-      host: localhost
-      password: RoboShop@1
-      login_unix_socket: /var/lib/mysql/mysql.sock
-      check_implicit_admin: true
+    shell: |
+      mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';"
+    ignore_errors: true
+  # - name: Set root password
+  #   community.mysql.mysql_user:
+  #     name: root
+  #     host: localhost
+  #     password: RoboShop@1
+  #     login_unix_socket: /var/lib/mysql/mysql.sock
+  #     check_implicit_admin: true
 
 
 
