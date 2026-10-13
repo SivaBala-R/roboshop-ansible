@@ -16,15 +16,15 @@
       state: present
   - name: remove app directory
     file:
-      src: /app
+      path: /app
       state: absent
   - name: remove shipping zip file
     file:
-      src: /tmp/shipping.zip
+      path: /tmp/shipping.zip
       state: absent
   - name: create app directory
     file:
-      src: /app
+      path: /app
       state: directory
   - name: download shipping code
     get_url:
