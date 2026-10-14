@@ -59,7 +59,7 @@
       name: mariadb105
       state: present
 
-  - name: 
+  - name: check cities database
     shell: >
       mysql -h {{ MYSQL_HOST }}
       -uroot
