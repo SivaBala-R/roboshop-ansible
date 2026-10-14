@@ -6,7 +6,7 @@
   tasks:
   - name: Install MySQL Server
     package:
-      name: {{ item }}
+      name: "{{ item }}"
       state: present
     loop:
     - mariadb105-server
