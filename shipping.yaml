@@ -60,11 +60,11 @@
       state: present
 
   - name: 
-      shell: >
-        mysql -h {{ MYSQL_HOST }}
-        -uroot
-        -p{{ mysql_root_password }}
-        -Nse "SHOW DATABASES LIKE 'cities';"
+    shell: >
+      mysql -h {{ MYSQL_HOST }}
+      -uroot
+      -p{{ mysql_root_password }}
+      -Nse "SHOW DATABASES LIKE 'cities';"
       register: cities_db
       changed_when: false
       ignore_errors: yes
