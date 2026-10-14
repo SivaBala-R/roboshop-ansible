@@ -9,7 +9,7 @@
     loop:
     - python3
     - gcc
-    - python3-dlevel
+    - python3-devel
   - name: roboshop system user
     user:
       name: roboshop
