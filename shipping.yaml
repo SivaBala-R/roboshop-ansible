@@ -3,7 +3,6 @@
   become: yes
   vars:
     mysql_root_password: RoboShop@1
-    mysql_host: 172.31.21.35
   tasks:
   - name: install maven
     package:
@@ -62,7 +61,7 @@
 
   - name: 
       shell: >
-        mysql -h {{ mysql_host }}
+        mysql -h {{ MYSQL_HOST }}
         -uroot
         -p{{ mysql_root_password }}
         -Nse "SHOW DATABASES LIKE 'cities';"
