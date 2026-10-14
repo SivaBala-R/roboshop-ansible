@@ -10,7 +10,6 @@
       state: present
     loop:
     - mariadb105-server
-    - python3-PyMySQL
   - name: Enable and Start MySQL Service
     service:
       name: mariadb
