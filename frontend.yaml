@@ -2,10 +2,6 @@
   hosts: frontend
   become: yes
   tasks:
-  - name: uninstall nginx
-    package:
-      name: nginx
-      state: absent
   - name: install nginx
     package:
       name: nginx
