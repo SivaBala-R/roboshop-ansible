@@ -15,6 +15,14 @@
       name: mariadb
       state: started
       enabled: yes
+  - name: Install pip
+    ansible.builtin.dnf:
+      name: python3-pip
+      state: present
+
+  - name: Install PyMySQL
+    ansible.builtin.pip:
+      name: PyMySQL
   - name: Set root password
     community.mysql.mysql_user:
       name: root
