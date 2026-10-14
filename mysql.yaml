@@ -23,14 +23,14 @@
   - name: Install PyMySQL
     ansible.builtin.pip:
       name: PyMySQL
-  - name: Set root password
-    community.mysql.mysql_user:
-      name: root
-      host: localhost
-      password: "{{ mysql_root_password }}"
-      login_unix_socket: /var/lib/mysql/mysql.sock
-      check_implicit_admin: true
-      state: present  
+  # - name: Set root password
+  #   community.mysql.mysql_user:
+  #     name: root
+  #     host: localhost
+  #     # password: "{{ mysql_root_password }}"
+  #     login_unix_socket: /var/lib/mysql/mysql.sock
+  #     check_implicit_admin: true
+  #     state: present  
   - name: Create root user
     community.mysql.mysql_user:
       name: "root"
