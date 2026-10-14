@@ -1,6 +1,8 @@
 - name: congigure mysql server
   hosts: mysql
   become: yes
+  vars:
+    mysql_root_password: RoboShop@1
   tasks:
   - name: Install MySQL Server
     package:
@@ -9,15 +11,42 @@
     loop:
     - mariadb105-server
     - python3-PyMySQL
-  - name: Start MySQL Service
+  - name: Enable and Start MySQL Service
     service:
       name: mariadb
       state: started
       enabled: yes
   - name: Set root password
-    shell: |
-      mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';"
-    ignore_errors: true
+    community.mysql.mysql_user:
+      name: root
+      host: localhost
+      password: "{{ mysql_root_password }}"
+      login_unix_socket: /var/lib/mysql/mysql.sock
+      check_implicit_admin: true
+      state: present  
+  - name: Create root user
+    community.mysql.mysql_user:
+      name: "root"
+      password: "{{ mysql_root_password }}"
+      host: "%"
+      priv: "*.*:ALL,GRANT"
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      state: present
+  - name: Flush Privileges
+    community.mysql.mysql_query:
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      query: FLUSH PRIVILEGES
+  - name: Restart MariaDB
+    ansible.builtin.service:
+      name: mariadb
+      state: restarted
+
+
+    # shell: |
+    #   mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';"
+    # ignore_errors: true
   # - name: Set root password
   #   community.mysql.mysql_user:
   #     name: root

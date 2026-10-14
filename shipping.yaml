@@ -3,6 +3,7 @@
   become: yes
   vars:
     mysql_root_password: RoboShop@1
+    mysql_host: 172.31.21.35
   tasks:
   - name: install maven
     package:
@@ -53,25 +54,27 @@
     template:
       src: shipping.service.j2
       dest: /etc/systemd/system/shipping.service
-  # - name: install python dependencies
-  #   pip:
-  #     name: python3-PyMySQL
-  #     executable: pip
-  # - name: load mysql data
-  #   community.mysql.mysql_db:
-  #     state: import
-  #     name: all
-  #     login_user: root
-  #     login_password: RoboShop@1
-  #     login_host: "{{ MYSQL_HOST }}"
-  #     target: "{{ item }}"
-  #   loop:
-  #   - /app/db/schema.sql
-  #   - /app/db/app-user.sql 
-  #   - /app/db/master-data.sql
+
+  - name: install mariadb105 client
+    package:
+      name: mariadb105
+      state: present
+
+  - name: 
+      shell: >
+        mysql -h {{ mysql_host }}
+        -uroot
+        -p{{ mysql_root_password }}
+        -Nse "SHOW DATABASES LIKE 'cities';"
+      register: cities_db
+      changed_when: false
+      ignore_errors: yes
 
   - name: Load schema
-    shell: mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
+    shell: |
+      mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
+      mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
+      mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
 
 
   - name: deamon reload
