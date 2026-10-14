@@ -65,16 +65,16 @@
       -uroot
       -p{{ mysql_root_password }}
       -Nse "SHOW DATABASES LIKE 'cities';"
-      register: cities_db
-      changed_when: false
-      ignore_errors: yes
+    register: cities_db
+    changed_when: false
+    ignore_errors: yes
 
   - name: Load schema
     shell: |
       mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
       mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
       mysql -h {{ MYSQL_HOST }} -uroot -p{{ mysql_root_password }} < /app/db/schema.sql
-    when: cities_db.stdout == ""
+    when: cities_db.stdout == ""  
 
 
   - name: deamon reload
