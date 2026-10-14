@@ -38,6 +38,10 @@
       src: /tmp/payment.zip
       dest: /app
       remote_src: yes
+  - name: Install pip
+    ansible.builtin.dnf:
+      name: python3-pip
+      state: present
   - name: install dependencies
     pip: 
       requirements: requirements.txt
